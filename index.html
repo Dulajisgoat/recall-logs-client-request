@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Recall — Build Notes & Change List</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.65;
+    color: #1E232E;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #FBFAF6;
+  }
+  h1, h2, h3, h4 {
+    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    color: #1E232E;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  h1 { font-size: 28pt; margin: 0 0 8px; font-weight: 600; }
+  h2 {
+    font-size: 16pt;
+    margin: 42px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E3DDCE;
+    font-weight: 600;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12.5pt;
+    margin: 26px 0 8px;
+    font-weight: 600;
+    color: #8E682C;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 11pt;
+    margin: 18px 0 6px;
+    font-weight: 600;
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  code {
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 9.5pt;
+    background: #F3F0E8;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #964539;
+  }
+  pre {
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 9pt;
+    background: #F3F0E8;
+    border-left: 3px solid #B87333;
+    padding: 12px 14px;
+    border-radius: 4px;
+    overflow-x: auto;
+    line-height: 1.5;
+    margin: 12px 0;
+    white-space: pre-wrap;
+  }
+  blockquote {
+    margin: 14px 0;
+    padding: 4px 0 4px 16px;
+    border-left: 3px solid #B87333;
+    color: #525865;
+    font-style: italic;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 10pt;
+    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #E3DDCE;
+    vertical-align: top;
+  }
+  th {
+    background: #F3F0E8;
+    font-weight: 600;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #525865;
+  }
+  .cover {
+    text-align: center;
+    padding: 80px 20px 60px;
+    border-bottom: 2px solid #B87333;
+    margin-bottom: 40px;
+  }
+  .cover .mark {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 42pt;
+    color: #B87333;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .cover h1 { font-size: 32pt; margin-bottom: 6px; }
+  .cover .sub {
+    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    font-size: 11pt;
+    color: #8B8F98;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+  .tag {
+    display: inline-block;
+    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag-fix { background: #EFDDD7; color: #964539; }
+  .tag-feature { background: #F1E6CF; color: #8E682C; }
+  .tag-touch { background: #E0E7E1; color: #446455; }
+  .tag-skip { background: #ECE8DC; color: #525865; }
+  .box {
+    background: #F3F0E8;
+    border: 1px solid #E3DDCE;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 18px 0;
+    page-break-inside: avoid;
+  }
+  .box p:last-child { margin-bottom: 0; }
+  .box strong { color: #8E682C; }
+  .page-break { page-break-before: always; }
+  hr {
+    border: none;
+    border-top: 1px solid #E3DDCE;
+    margin: 30px 0;
+  }
+  .footer-note {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #E3DDCE;
+    font-size: 9.5pt;
+    color: #8B8F98;
+    text-align: center;
+    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+  }
+  @media print {
+    body { background: white; padding: 0; max-width: none; }
+    .cover { padding-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="mark">R</div>
+  <h1>Recall</h1>
+  <div class="sub">Build Notes &amp; Change List</div>
+  <p style="font-family: Georgia, serif; font-style: italic; color: #525865; margin-top: 24px; font-size: 12pt;">
+    A working document for the next few sprints.
+  </p>
+</div>
+
+<p>Alright, so I went through <code>index.html</code> line by line. It's honestly in good shape — the design tokens hold together, the SM-2 logic is clean, the offline queue actually works, and the command palette is a nice touch. But there's a handful of things that are either broken, missing, or just aren't pulling their weight yet.</p>
+
+<p>This document is my working plan. It's ordered by what I'd actually do first, not by how impressive it sounds on a feature list. Everything here is grounded in the current code — no "rewrite it in React" fantasies.</p>
+
+<h2>Part One — Fix What's Broken</h2>
+
+<p>These are bugs, not features. Some of them are quiet — you won't notice them until something goes wrong in a way that's hard to trace. Do these before adding anything new.</p>
+
+<h3><span class="tag tag-fix">Bug</span> The card grading race</h3>
+
+<p>In <code>answerMc()</code>, you save a reference to the card being answered, then call <code>submitReview()</code> after a 550ms timeout. But <code>submitReview</code> reads <code>state.study.cards[state.study.index]</code> again — it doesn't use the card you passed. If the user taps Next during that half-second, the wrong card gets graded. It's rare, but it's the kind of bug that shows up in a bug report six months from now and takes an hour to find.</p>
+
+<p>Fix: change the signature to <code>submitReview(quality, card)</code> and use the passed card everywhere inside. Small change, removes a whole class of weirdness.</p>
+
+<h3><span class="tag tag-fix">Bug</span> The star button on unsaved notes</h3>
+
+<p>When you open the note editor for a new note, the favorite star is still clickable. Clicking it fires <code>toggleFavorite('note', null)</code>, which shows "Save this first" — but the star still looks active. Small thing, but it's the kind of tiny friction that makes the app feel less careful than it is.</p>
+
+<p>Fix: disable the star (with a <code>disabled</code> attribute and a subtle opacity change) until <code>state.editingNoteId</code> exists.</p>
+
+<h3><span class="tag tag-fix">Bug</span> The note-to-flashcard parser</h3>
+
+<p>This is the weakest part of an otherwise solid feature. Right now it uses:</p>
+
+<pre>line.match(/^Q:\s*(.+?)\s*A:\s*(.+)$/i) || line.match(/^(.+?)\s*[-–:]\s+(.+)$/)</pre>
+
+<p>The second regex matches timestamps ("12:30"), URLs ("http://..."), hyphenated words ("state-of-the-art"), and any sentence with a colon. It'll silently produce garbage cards. Also, <code>Q: ... A: ...</code> on the same line is rare — most people write them on separate lines.</p>
+
+<p>Replace it with a small state machine that handles:</p>
+
+<pre>Q: What is X?
+A: It is Y.
+
+Term - Definition
+Term: Definition
+Term | Definition</pre>
+
+<p>Skip any line where the "answer" is under three characters, or where there's no clear delimiter. It's maybe 40 lines of code and it's the difference between a feature people use and one they ignore.</p>
+
+<h3><span class="tag tag-fix">Bug</span> Images in text columns</h3>
+
+<p>You're storing base64 images inside <code>notes.img</code> and inside <code>cards.q</code> (via that <code>IMG_MARK</code> trick). It works, but Supabase has a 1MB row limit by default. A single 1200px JPEG at 0.82 quality is 150–400KB. Two images and you're bumping the ceiling. Also, every list query drags those images across the wire even when you're not rendering them.</p>
+
+<p>Fix: move to Supabase Storage. Create two buckets — <code>note-images</code> and <code>card-images</code>, scoped by user ID. Store only the public URL in the row. This is the single most important change for scaling the app past a few hundred notes.</p>
+
+<h3><span class="tag tag-fix">Bug</span> Search doesn't clear when you leave</h3>
+
+<p>If you search for something, then click Dashboard in the rail, the search box still has the old query and the library view is still technically populated. It's a small thing, but it makes the app feel sticky in the wrong way.</p>
+
+<p>Fix: clear <code>#searchInput</code> inside <code>showView()</code> whenever the target view isn't <code>library</code>.</p>
+
+<h3><span class="tag tag-fix">Bug</span> Offline conflicts silently overwrite</h3>
+
+<p>If you edit a note online in another tab, then come back to this tab which has an offline edit queued, the offline edit wins without any warning. <code>processOfflineQueue()</code> just fires the update.</p>
+
+<p>At minimum, compare <code>updated_at</code> timestamps before applying. If the server row is newer, drop the local edit and notify. It's not a full CRDT — it's just honest.</p>
+
+<h2 class="page-break">Part Two — What to Build Next</h2>
+
+<p>Ordered by ROI, not by excitement. Each of these is self-contained enough that you can ship it in a weekend.</p>
+
+<h3><span class="tag tag-feature">Feature</span> Pomodoro timer</h3>
+
+<p>This is the one I'd build today. It's small, it's visual, and it reinforces the study loop that the rest of the app is already built around.</p>
+
+<h4>What it looks like</h4>
+
+<ul>
+  <li>A thin circular progress ring in the topbar, always visible. Gold when idle, copper when running.</li>
+  <li>Click it to expand a small panel — presets for 25/5, 50/10, and 15/3.</li>
+  <li>A soft two-note chime on completion. Use the Web Audio API — no MP3 asset, no load delay.</li>
+  <li>When a focus session ends, call <code>recordStudyActivity()</code> so it feeds the streak and the activity chart automatically.</li>
+  <li>Optional: link the current session to a deck. Show "Studying: Spanish verbs" under the timer.</li>
+</ul>
+
+<h4>Why this first</h4>
+
+<p>It's item #12 on your own list. It's self-contained. And unlike the more ambitious features, it makes the app feel alive on every screen without requiring the user to do anything.</p>
+
+<h3><span class="tag tag-feature">Feature</span> A real logo, and a copper accent</h3>
+
+<p>Right now the logo is a serif italic "R" next to the word "ecall". It's fine, but it doesn't <em>read</em> as a logo — it reads as a heading.</p>
+
+<h4>What to do</h4>
+
+<ul>
+  <li>Draw a small monogram: an "R" with a copper-to-gold gradient stroke. 28×28 in the rail, 20×20 in the topbar.</li>
+  <li>Use the same monogram as the favicon (inline SVG data URI, no extra file).</li>
+  <li>Add a <code>--copper: #B87333</code> token, plus a soft <code>--copper-bg</code> tint.</li>
+  <li>Reserve copper for: the streak flame, the Pomodoro ring, the "due today" number, and favorite stars.</li>
+  <li>Keep gold for the deck color option, the serif italic marks, and the primary accent.</li>
+</ul>
+
+<p>Two related colors, distinct roles. That's what makes a palette feel intentional instead of decorative.</p>
+
+<h3><span class="tag tag-feature">Feature</span> Color coding for cards and notes</h3>
+
+<p>You already have deck colors — gold, sage, brick. Extend the system one level down.</p>
+
+<ul>
+  <li>Let individual cards override their deck's color. Useful when a deck mixes topics.</li>
+  <li>Let notes carry a color tag — a small pill in the corner of the note card.</li>
+  <li>Add a fourth option: copper.</li>
+  <li>Surface the color in search results, dashboard favorites, and the rail mini-list.</li>
+</ul>
+
+<p>You can store it the same way you store MC data — a hidden suffix in the text field. Or just add a real <code>color</code> column. Either works; the column is cleaner.</p>
+
+<h3><span class="tag tag-feature">Feature</span> A sliding dock</h3>
+
+<p>Right now every feature is a full-page swap. You can't check your reminders without leaving the deck you're studying.</p>
+
+<p>Build a persistent dock — vertical on the right edge for desktop, horizontal at the bottom for mobile. Five icons: Dashboard, Cards, Notes, Reminders, Pomodoro. Each one opens a slide-over panel (the same pattern you already use for <code>studyPanel</code>) instead of a full view change.</p>
+
+<p>The active icon gets a copper underline. Everything else stays quiet.</p>
+
+<h3><span class="tag tag-feature">Feature</span> Auto-organizing, starting simple</h3>
+
+<p>Your list says "AI or edge functions." Start with the boring version first — it's 80% of the value for 5% of the effort.</p>
+
+<h4>Phase one — client-side, no LLM</h4>
+
+<ul>
+  <li>Extract keywords from notes using TF-IDF over your own corpus. Auto-suggest tags on save.</li>
+  <li>Group decks that share tags. Show a "related decks" strip on the dashboard.</li>
+  <li>Detect near-duplicate cards with Levenshtein similarity above 0.85. Show a "3 similar cards" hint in the deck detail view.</li>
+  <li>Suggest "you have 4 notes tagged 'Spanish' — create a deck?" from the notes view.</li>
+</ul>
+
+<h4>Phase two — edge functions</h4>
+
+<ul>
+  <li>On note save, call an edge function that returns three suggested tags and a one-line summary.</li>
+  <li>On deck create, suggest a color and a study order.</li>
+  <li>An "Explain this card" button in study mode.</li>
+</ul>
+
+<p>Phase one alone will feel magical. Phase two is a nice-to-have.</p>
+
+<h3><span class="tag tag-feature">Feature</span> Snippets — code and file storage</h3>
+
+<p>A new view. Title, language, body, tags. Syntax highlighting via Shiki (lighter and prettier than Prism). A copy button, line numbers, and a dark code block that actually matches your paper theme.</p>
+
+<p>Link snippets to notes and cards — "See snippet: binary search" from inside a card. Binary files go to Supabase Storage with metadata in a <code>files</code> table.</p>
+
+<p>This is the feature that turns Recall from a study app into a proper second brain.</p>
+
+<h2 class="page-break">Part Three — Small Touches</h2>
+
+<p>None of these are features, but all of them are the difference between "nice app" and "app I open every day."</p>
+
+<table>
+  <tr><th>Touch</th><th>Why it matters</th></tr>
+  <tr><td>Italic serif for key words</td><td>You already use Newsreader for headings. Use italic serif for the user's name in the greeting, deck names in study, and the "due today" label. It becomes your typographic signature.</td></tr>
+  <tr><td>Subtle paper texture</td><td>An SVG noise filter on the <code>--paper</code> background. Makes the app feel physical.</td></tr>
+  <tr><td>Copper-to-gold gradient on the flame</td><td>The streak flame is currently flat gold. A gradient makes it feel earned.</td></tr>
+  <tr><td>Undo on delete</td><td>Add an Undo button to delete toasts. Queue the delete, apply after 5 seconds. Safety net for misclicks.</td></tr>
+  <tr><td>View Transitions API</td><td>Wrap <code>showView()</code> in <code>document.startViewTransition()</code>. One-line change, smooth transitions between views on modern browsers.</td></tr>
+  <tr><td>Haptic on card flip</td><td><code>navigator.vibrate(10)</code> when flipping on mobile. Tiny, but noticeable.</td></tr>
+  <tr><td>Confetti on streak milestones</td><td>7 days, 30 days, 100 days. A one-second canvas burst. Cheap, joyful.</td></tr>
+  <tr><td>Keyboard shortcut <code>P</code></td><td>Start or pause the Pomodoro from anywhere.</td></tr>
+  <tr><td>Keyboard shortcut <code>F</code></td><td>Toggle favorite on the current note or deck.</td></tr>
+  <tr><td>Command palette additions</td><td>"Start Pomodoro," "Toggle dark mode," "Export all data," "Delete all notes."</td></tr>
+</table>
+
+<h2>Part Four — What Not to Build</h2>
+
+<p>This section matters as much as the others. Every feature you add is a feature you have to maintain, and some of them actively dilute the app.</p>
+
+<h3><span class="tag tag-skip">Skip</span> Social features</h3>
+
+<p>Sharing decks publicly, following other users, leaderboards. All of it pulls attention away from the actual point, which is your own study loop.</p>
+
+<h3><span class="tag tag-skip">Skip</span> AI chat</h3>
+
+<p>You already have a command palette and search. A chat box would be a gimmick. The auto-tagging and "explain this card" features are useful because they're scoped. A general chat interface is not.</p>
+
+<h3><span class="tag tag-skip">Skip</span> Gamification badges</h3>
+
+<p>Streaks plus Pomodoro stats are enough. Badges and points feel cheap, and they train users to chase the badge instead of the learning.</p>
+
+<h3><span class="tag tag-skip">Skip</span> A calendar view</h3>
+
+<p>Your reminders list plus the activity chart already cover the ground a calendar would. Adding one would just be a second way to see the same data.</p>
+
+<h3><span class="tag tag-skip">Skip</span> Extra themes</h3>
+
+<p>One paper theme and one dark theme is plenty. Three themes is a design decision that starts to feel like an escape hatch for not committing to one.</p>
+
+<h2 class="page-break">Part Five — Six-Week Plan</h2>
+
+<p>Here's how I'd actually sequence this. Roughly a sprint per week, but realistically some weeks will slip and that's fine.</p>
+
+<h3>Week 1 — Signature look, plus the timer</h3>
+<ul>
+  <li>Copper token, logo SVG, favicon, empty-state watermarks</li>
+  <li>Pomodoro panel, topbar ring, chime</li>
+  <li>Fix the <code>submitReview</code> race</li>
+  <li>Undo on delete</li>
+</ul>
+
+<h3>Week 2 — Color and the dock</h3>
+<ul>
+  <li>Card and note color picker</li>
+  <li>Sliding dock (desktop right edge, mobile bottom)</li>
+  <li>View Transitions API</li>
+</ul>
+
+<h3>Week 3 — Auto-organize, phase one</h3>
+<ul>
+  <li>Keyword extraction for auto-tags</li>
+  <li>Duplicate card detection</li>
+  <li>"Create deck from these notes?" suggestions</li>
+</ul>
+
+<h3>Week 4 — Storage and PWA</h3>
+<ul>
+  <li>Migrate images to Supabase Storage</li>
+  <li>Service worker plus manifest</li>
+  <li>IndexedDB for meta and history</li>
+</ul>
+
+<h3>Week 5 — Snippets</h3>
+<ul>
+  <li><code>snippets</code> table with Shiki highlighting</li>
+  <li>Link snippets to notes and cards</li>
+</ul>
+
+<h3>Week 6 — Auto-organize, phase two</h3>
+<ul>
+  <li>Edge Function for LLM-based tagging</li>
+  <li>"Explain this card" in study mode</li>
+</ul>
+
+<div class="box">
+  <p><strong>If you only do one thing this week:</strong> build the Pomodoro timer. It's the smallest change on this list, it's the most visible, and it makes the app feel more finished than any of the bigger features will.</p>
+</div>
+
+<h2>Closing</h2>
+
+<p>Recall is closer to being done than it looks. The foundations are solid — the auth flow, the offline queue, the SM-2 logic, the design system. What's missing is mostly the layer between "technically works" and "feels like a product you'd recommend to a friend."</p>
+
+<p>The Pomodoro timer, the copper accent, and the logo monogram alone will shift that feeling more than you'd expect. Everything after that is polish and scale.</p>
+
+<p>Start small. Ship one thing this week. The rest can wait.</p>
+
+<div class="footer-note">
+  Recall — Build Notes &amp; Change List · Compiled from a full review of <code>index.html</code>
+</div>
+
+</body>
+</html>
