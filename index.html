@@ -8,29 +8,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* Liquid Glass Variables */
+  /* Liquid Glass Variables - Red on Light Background */
   :root {
-    --bg-black: #050505;
-    --glass-dark: rgba(18, 18, 18, 0.45);
-    --glass-light: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-highlight: rgba(255, 255, 255, 0.25);
+    --bg-light: #f0f2f5;
+    --glass-dark: rgba(255, 255, 255, 0.65);
+    --glass-light: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(200, 30, 50, 0.2);
+    --glass-highlight: rgba(255, 255, 255, 0.9);
     
     /* Liquid Glass Enhancements */
     --glass-saturation: 180%;
     --glass-blur: 20px;
     --glass-blur-heavy: 40px;
     --glass-refraction: 1px;
-    --glass-inner-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), inset 0 -1px 1px rgba(0, 0, 0, 0.2);
-    --glass-drop-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+    --glass-inner-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), inset 0 -1px 1px rgba(168, 44, 69, 0.1);
+    --glass-drop-shadow: 0 8px 32px rgba(168, 44, 69, 0.08), 0 2px 8px rgba(168, 44, 69, 0.05);
     
-    --wine-deep: #4A0E1E;
-    --wine-bright: #A82C45;
-    --wine-glow: rgba(168, 44, 69, 0.6);
+    --red-deep: #C41E3A;
+    --red-bright: #FF2400;
+    --red-glow: rgba(255, 36, 0, 0.4);
     
-    --text-light: #E0DCDA;
-    --text-white: #F7F7F7;
-    --text-muted: #959595;
+    --text-red: #C41E3A;
+    --text-dark-red: #8B0000;
+    --text-white: #FFFFFF;
+    --text-muted: #A0A0A0;
   }
 
   * { 
@@ -41,11 +42,11 @@
     font-family: 'Manrope', -apple-system, 'Segoe UI', Helvetica, sans-serif;
     font-size: 11pt;
     line-height: 1.65;
-    color: var(--text-light);
+    color: var(--text-red);
     max-width: 850px;
     margin: 0 auto;
     padding: 60px 30px;
-    background: var(--bg-black);
+    background: var(--bg-light);
     position: relative;
     overflow-x: hidden;
     /* Remove Cursor Completely */
@@ -66,9 +67,9 @@
     height: 100%;
     z-index: -2;
     background: 
-      radial-gradient(circle at 10% 10%, rgba(74, 14, 30, 0.4) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(168, 44, 69, 0.3) 0%, transparent 45%),
-      #050505;
+      radial-gradient(circle at 10% 10%, rgba(255, 36, 0, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(196, 30, 58, 0.08) 0%, transparent 45%),
+      #f0f2f5;
     overflow: hidden;
   }
 
@@ -78,20 +79,20 @@
     border-radius: 50%;
     filter: blur(80px);
     z-index: -1;
-    opacity: 0.5;
+    opacity: 0.3;
     animation: floatOrb 20s infinite ease-in-out;
   }
 
-  .orb-1 { width: 400px; height: 400px; background: var(--wine-deep); top: -100px; left: -100px; }
-  .orb-2 { width: 300px; height: 300px; background: var(--wine-bright); bottom: -50px; right: -50px; animation-delay: -5s; }
-  .orb-3 { width: 200px; height: 200px; background: #1a1a1a; top: 40%; left: 40%; animation-delay: -10s; }
+  .orb-1 { width: 400px; height: 400px; background: var(--red-deep); top: -100px; left: -100px; }
+  .orb-2 { width: 300px; height: 300px; background: var(--red-bright); bottom: -50px; right: -50px; animation-delay: -5s; }
+  .orb-3 { width: 200px; height: 200px; background: #FF6B6B; top: 40%; left: 40%; animation-delay: -10s; }
 
   /* Liquid Glass Cursor (Hidden by default, enabled on touch/mobile) */
   .glass-cursor {
     position: fixed;
     width: 30px;
     height: 30px;
-    border: 1px solid var(--glass-highlight);
+    border: 1px solid var(--red-deep);
     border-radius: 50%;
     background: var(--glass-light);
     backdrop-filter: blur(4px);
@@ -108,7 +109,7 @@
   /* Headings - Space Grotesk for that ultra-modern minimal look */
   h1, h2, h3, h4, .mark, .sub, .footer-note {
     font-family: 'Space Grotesk', sans-serif;
-    color: var(--text-white);
+    color: var(--text-dark-red);
     letter-spacing: -0.02em;
     line-height: 1.2;
   }
@@ -132,9 +133,9 @@
     content: '';
     width: 8px;
     height: 8px;
-    background: var(--wine-bright);
+    background: var(--red-bright);
     border-radius: 50%;
-    box-shadow: 0 0 15px var(--wine-glow);
+    box-shadow: 0 0 15px var(--red-glow);
     flex-shrink: 0;
   }
 
@@ -142,7 +143,7 @@
     font-size: 15pt;
     margin: 32px 0 12px;
     font-weight: 500;
-    color: var(--text-white);
+    color: var(--text-dark-red);
     page-break-after: avoid;
     opacity: 0;
     transform: translateY(15px);
@@ -157,26 +158,26 @@
     font-size: 13pt;
     margin: 24px 0 8px;
     font-weight: 500;
-    color: var(--text-white);
+    color: var(--text-dark-red);
     page-break-after: avoid;
   }
 
-  p { margin: 0 0 16px; opacity: 0; animation: fadeIn 1s forwards; animation-delay: 0.2s; color: var(--text-muted); }
+  p { margin: 0 0 16px; opacity: 0; animation: fadeIn 1s forwards; animation-delay: 0.2s; color: var(--text-red); }
   ul, ol { margin: 0 0 16px; padding-left: 24px; }
   li { 
     margin-bottom: 10px; 
     transition: color 0.3s ease, transform 0.3s ease; 
-    color: var(--text-muted);
+    color: var(--text-red);
   }
-  li:hover { color: var(--text-white); transform: translateX(4px); }
+  li:hover { color: var(--red-bright); transform: translateX(4px); }
 
   code {
     font-family: 'JetBrains Mono', Consolas, monospace;
     font-size: 9.5pt;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(196, 30, 58, 0.1);
     padding: 3px 6px;
     border-radius: 4px;
-    color: var(--text-white);
+    color: var(--red-deep);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -197,6 +198,7 @@
     white-space: pre-wrap;
     box-shadow: var(--glass-drop-shadow), var(--glass-inner-shadow);
     position: relative;
+    color: var(--text-dark-red);
   }
 
   /* Liquid Glass Pre Gloss */
@@ -204,7 +206,7 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, transparent 100%);
     pointer-events: none;
     border-radius: 16px 16px 0 0;
   }
@@ -212,12 +214,12 @@
   blockquote {
     margin: 20px 0;
     padding: 12px 20px;
-    border-left: 2px solid var(--wine-bright);
+    border-left: 2px solid var(--red-bright);
     background: var(--glass-dark);
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
     border-radius: 0 12px 12px 0;
-    color: var(--text-white);
+    color: var(--text-dark-red);
     font-style: italic;
     box-shadow: var(--glass-drop-shadow), var(--glass-inner-shadow);
   }
@@ -237,6 +239,7 @@
     border-bottom: 1px solid var(--glass-border);
     vertical-align: middle;
     transition: background 0.3s ease;
+    color: var(--text-red);
   }
 
   th {
@@ -261,8 +264,8 @@
   tr td:last-child { border-radius: 0 16px 16px 0; }
 
   tr:hover td {
-    background: rgba(168, 44, 69, 0.1);
-    color: var(--text-white);
+    background: rgba(255, 36, 0, 0.05);
+    color: var(--red-bright);
   }
 
   /* Cover Section */
@@ -270,17 +273,17 @@
     text-align: center;
     padding: 120px 30px 90px;
     margin-bottom: 60px;
-    background: radial-gradient(circle at top, rgba(74, 14, 30, 0.5) 0%, transparent 70%);
+    background: radial-gradient(circle at top, rgba(255, 36, 0, 0.08) 0%, transparent 70%);
     position: relative;
     overflow: hidden;
   }
 
   .cover .mark {
     font-size: 80pt;
-    color: var(--wine-bright);
+    color: var(--red-bright);
     line-height: 0.8;
     margin-bottom: 24px;
-    text-shadow: 0 0 40px var(--wine-glow);
+    text-shadow: 0 0 40px var(--red-glow);
     display: inline-block;
     animation: pulse 4s infinite ease-in-out;
     font-weight: 300;
@@ -289,16 +292,16 @@
   .cover h1 { 
     font-size: 46pt; 
     margin-bottom: 12px; 
-    color: var(--text-white);
+    color: var(--red-deep);
     font-weight: 600;
-    background: linear-gradient(180deg, #FFFFFF 0%, #BBBBBB 100%);
+    background: linear-gradient(180deg, var(--red-bright) 0%, var(--red-deep) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .cover .sub {
     font-size: 12pt;
-    color: var(--wine-bright);
+    color: var(--red-bright);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-top: 16px;
@@ -308,6 +311,7 @@
   .tag {
     display: inline-flex;
     align-items: center;
+    gap: 6px;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 8.5pt;
     font-weight: 600;
@@ -325,17 +329,31 @@
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-drop-shadow), var(--glass-inner-shadow);
   }
+
+  /* Pure CSS Icons for Tags (No external icon libraries) */
+  .tag::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .tag-pivot::before { border-radius: 0; transform: rotate(45deg); width: 5px; height: 5px; background: var(--red-bright); }
+  .tag-feature::before { border-radius: 2px; width: 8px; height: 8px; border: 1px solid var(--red-bright); background: transparent; }
+  .tag-fix::before { border-radius: 0; width: 8px; height: 2px; background: var(--red-bright); margin-top: 3px; }
+  .tag-skip::before { border-radius: 50%; width: 6px; height: 6px; border: 1px solid var(--red-deep); background: transparent; }
   
   .tag:hover {
     transform: scale(1.05) translateY(-2px);
-    background: rgba(255,255,255,0.08);
-    border-color: var(--glass-highlight);
+    background: rgba(255,255,255,0.9);
+    border-color: var(--red-bright);
   }
 
-  .tag-pivot { color: var(--text-white); border-color: rgba(168, 44, 69, 0.5); background: linear-gradient(135deg, rgba(74, 14, 30, 0.6), rgba(20, 20, 20, 0.4)); }
-  .tag-feature { color: var(--wine-bright); }
-  .tag-fix { color: #4A90E2; }
-  .tag-skip { color: #888; border-color: rgba(255,255,255,0.05); }
+  .tag-pivot { color: var(--red-bright); border-color: rgba(255, 36, 0, 0.3); background: linear-gradient(135deg, rgba(255, 36, 0, 0.1), rgba(255, 255, 255, 0.6)); }
+  .tag-feature { color: var(--red-deep); }
+  .tag-fix { color: var(--red-bright); }
+  .tag-skip { color: var(--red-deep); border-color: rgba(196, 30, 58, 0.2); }
 
   /* Liquid Glass Box */
   .box {
@@ -366,17 +384,17 @@
     position: absolute;
     top: -50%; left: -50%;
     width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 40%);
     pointer-events: none;
   }
 
   .box:hover {
     transform: translateY(-4px);
-    border-color: rgba(168, 44, 69, 0.4);
+    border-color: rgba(255, 36, 0, 0.4);
   }
 
-  .box p:last-child { margin-bottom: 0; color: var(--text-light); position: relative; z-index: 1; }
-  .box strong { color: var(--wine-bright); font-weight: 600; }
+  .box p:last-child { margin-bottom: 0; color: var(--text-red); position: relative; z-index: 1; }
+  .box strong { color: var(--red-bright); font-weight: 600; }
 
   .page-break { page-break-before: always; margin-top: 80px; }
   
@@ -399,11 +417,11 @@
 
   /* Sleek highlight animation for important text */
   .auto-highlight {
-    color: var(--text-white);
-    font-weight: 600;
-    background: linear-gradient(180deg, #A82C45 0%, #4A0E1E 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--red-bright);
+    font-weight: 700;
+    background: linear-gradient(180deg, rgba(255, 36, 0, 0.1) 0%, transparent 100%);
+    border-radius: 4px;
+    padding: 0 4px;
     animation: highlightFadeIn 0.8s ease-out forwards;
   }
 
@@ -411,8 +429,8 @@
   @keyframes fadeIn { to { opacity: 1; } }
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse {
-    0%, 100% { text-shadow: 0 0 30px var(--wine-glow); transform: scale(1); }
-    50% { text-shadow: 0 0 60px var(--wine-glow); transform: scale(1.02); }
+    0%, 100% { text-shadow: 0 0 30px var(--red-glow); transform: scale(1); }
+    50% { text-shadow: 0 0 60px var(--red-glow); transform: scale(1.02); }
   }
   @keyframes floatOrb {
     0%, 100% { transform: translate(0, 0); }
@@ -421,8 +439,8 @@
     75% { transform: translate(20px, -30px); }
   }
   @keyframes highlightFadeIn {
-    from { opacity: 0.5; }
-    to { opacity: 1; }
+    from { opacity: 0.5; background: rgba(255, 36, 0, 0.2); }
+    to { opacity: 1; background: rgba(255, 36, 0, 0.05); }
   }
 
   /* Responsive */
@@ -441,12 +459,12 @@
     .cover { padding-top: 40px; background: none; box-shadow: none; border: none; }
     h1, h2, h3, h4, p, li, td, th { color: #000; }
     h2, h3, p { opacity: 1; transform: none; }
-    h2 { border-bottom: 1px solid #4A0E1E; }
+    h2 { border-bottom: 1px solid var(--red-deep); }
     h2::before { display: none; }
-    pre, code { background: #f4f4f4; color: #4A0E1E; border: 1px solid #ddd; }
+    pre, code { background: #f4f4f4; color: var(--red-deep); border: 1px solid #ddd; }
     .box { background: #f9f9f9; box-shadow: none; border: 1px solid #ddd; }
     .tag { border: 1px solid #ddd; }
-    .auto-highlight { color: #A82C45; -webkit-text-fill-color: #A82C45; background: none; }
+    .auto-highlight { color: var(--red-bright); -webkit-text-fill-color: var(--red-bright); background: none; }
   }
 </style>
 </head>
@@ -462,7 +480,7 @@
   <div class="mark">R</div>
   <h1>Recall Tutoring</h1>
   <div class="sub">Project Pitch &amp; Development Roadmap</div>
-  <p style="font-family: 'Space Grotesk', sans-serif; color: #E0DCDA; margin-top: 24px; font-size: 14pt; position: relative; z-index: 2; opacity: 1; animation: none; font-style: normal;">
+  <p style="font-family: 'Space Grotesk', sans-serif; color: var(--text-red); margin-top: 24px; font-size: 14pt; position: relative; z-index: 2; opacity: 1; animation: none; font-style: normal;">
     Evolving our platform into a global educational hub.
   </p>
 </div>
@@ -470,7 +488,7 @@
 <p>Good morning, team! Big announcement: we are officially pivoting <strong>Recall</strong> from a personal study app into a <strong>Global Tutoring Platform</strong>. This document outlines the client requirements, our new global feature set, and how we’ll repurpose our existing, powerful tech (like our offline queue and SM-2 algorithm) to build a world-class educational experience. Let's start fresh with a clear vision.</p>
 
 <h2>Core Client Requirements</h2>
-<p>These are the non-negotiable features requested by the client. Our UI/UX will be built on a sleek, premium Wine Red and Black color palette.</p>
+<p>These are the non-negotiable features requested by the client. Our UI/UX will be built on a sleek, premium Red and Bright Light color palette.</p>
 
 <h3><span class="tag tag-pivot">Core</span> 1. Subscription Tier (Free Preview)</h3>
 <p>We need a tiered access model. New users will get a free subscription that allows them to preview a limited number of lessons before being prompted to enroll. We will implement a "paywall" logic that checks their access tier before revealing full lesson content.</p>
@@ -478,8 +496,8 @@
 <h3><span class="tag tag-pivot">Core</span> 2. Program Enrollment System</h3>
 <p>Users will now have the ability to enroll in structured tutoring programs (e.g., "SAT Prep," "Organic Chemistry 101"). This replaces the old "deck" system. Users browse a catalog, select a program, and their dashboard populates with that program's specific lessons, instructors, and flashcards.</p>
 
-<h3><span class="tag tag-pivot">Core</span> 3. Wine Red &amp; Black UI/UX</h3>
-<p>To spice things up and match the premium tutoring brand, we’re shifting from the paper theme to a sleek dark mode. Deep black backgrounds (<code>#0D0D0D</code>) with wine red accents (<code>#A82C45</code>) and subtle gradients to make the interface feel modern, focused, and high-end.</p>
+<h3><span class="tag tag-pivot">Core</span> 3. Red &amp; Light UI/UX</h3>
+<p>To spice things up and match the premium tutoring brand, we’re shifting from the paper theme to a sleek bright mode. Deep light backgrounds (<code>#f0f2f5</code>) with bright red accents (<code>#FF2400</code>) and subtle gradients to make the interface feel modern, focused, and high-end.</p>
 
 <h3><span class="tag tag-pivot">Core</span> 4. International Reach</h3>
 <p>The platform must be framed as a "World Wide School." We need internationalization (i18n) support, multi-currency for program pricing, and timezone-aware scheduling for live tutoring sessions.</p>
@@ -506,7 +524,7 @@
 <h3><span class="tag tag-feature">Feature</span> The Study Session Timer (Pomodoro)</h3>
 <p>This is still a top priority. For tutoring, structured study time is critical. We will brand this as the "Focus Session" timer.</p>
 <ul>
-  <li>Thin circular progress ring in the topbar, glowing wine red when running.</li>
+  <li>Thin circular progress ring in the topbar, glowing bright red when running.</li>
   <li>Presets for standard study intervals (25/5, 50/10).</li>
   <li>When a focus session ends, it feeds the student's activity chart and streak, gamifying their learning.</li>
   <li>Tutors can see aggregate focus times for their enrolled students.</li>
@@ -515,7 +533,7 @@
 <h3><span class="tag tag-feature">Feature</span> Tutor Dashboard &amp; Branding</h3>
 <p>The old "logo monogram" idea now applies to our tutors. Each tutor gets a sleek avatar and a profile page.</p>
 <ul>
-  <li>Use the wine red and black palette to create high-contrast, readable profile cards.</li>
+  <li>Use the red and light palette to create high-contrast, readable profile cards.</li>
   <li>Display tutor ratings, program previews (free tier), and full programs (enrolled tier).</li>
 </ul>
 
@@ -531,7 +549,7 @@
 <p>Students shouldn't have to leave their lesson to check their schedule. A persistent dock on the right edge (desktop) and bottom (mobile) will allow quick access to: Dashboard, Current Programs, Live Sessions, Focus Timer, and Settings.</p>
 
 <h3><span class="tag tag-feature">Feature</span> Resource Snippets</h3>
-<p>The "Snippets" feature becomes a place for code examples, formulas, and downloadable resources provided by the tutor. Syntax highlighting via Shiki will make these look premium in our dark UI.</p>
+<p>The "Snippets" feature becomes a place for code examples, formulas, and downloadable resources provided by the tutor. Syntax highlighting via Shiki will make these look premium in our light UI.</p>
 
 <h2 class="page-break">Part Three — Small Touches</h2>
 
@@ -539,12 +557,12 @@
 
 <table>
   <tr><th>Touch</th><th>Why it matters</th></tr>
-  <tr><td>Premium Dark Typography</td><td>Use elegant serif fonts (like Playfair Display) for program titles and headings to give an academic, Ivy League feel against the black background.</td></tr>
-  <tr><td>Wine Red Gradients</td><td>Use subtle red-to-black gradients on focus flames and streak counters to make achievements feel earned and visually pop.</td></tr>
+  <tr><td>Premium Bright Typography</td><td>Use elegant serif fonts (like Playfair Display) for program titles and headings to give an academic, Ivy League feel against the light background.</td></tr>
+  <tr><td>Red Gradients</td><td>Use subtle red-to-transparent gradients on focus flames and streak counters to make achievements feel earned and visually pop.</td></tr>
   <tr><td>Undo on Un-enroll</td><td>Add an Undo button to un-enrollment toasts. Prevents accidental loss of course progress.</td></tr>
   <tr><td>View Transitions API</td><td>Wrap view changes in <code>document.startViewTransition()</code> for smooth, app-like transitions between the catalog and the dashboard.</td></tr>
   <tr><td>Haptic feedback</td><td><code>navigator.vibrate(10)</code> on mobile when a student flips a flashcard or marks a lesson complete.</td></tr>
-  <tr><td>Confetti on Course Completion</td><td>When a student finishes a program, a sleek, wine-red-themed canvas burst. Cheap, joyful, and highly shareable.</td></tr>
+  <tr><td>Confetti on Course Completion</td><td>When a student finishes a program, a sleek, red-themed canvas burst. Cheap, joyful, and highly shareable.</td></tr>
 </table>
 
 <h2>Part Four — What Not to Build (Yet)</h2>
@@ -554,17 +572,17 @@
 <h3><span class="tag tag-skip">Skip</span> Social Leaderboards</h3>
 <p>Comparing students globally can hurt confidence. We will focus on personal streaks and tutor relationships first.</p>
 
-<h3><span class="tag tag-skip">Skip</span> General AI Chat</h3>
-<p>We will eventually add "Ask your tutor AI," but a general chat box is a gimmick right now. We will stick to scoped AI features like auto-tagging programs.</p>
+<h3><span class="tag tag-skip">Skip</span> General Chat</h3>
+<p>We will eventually add scoped chat features, but a general chat box is a gimmick right now. We will stick to scoped features like auto-tagging programs.</p>
 
-<h3><span class="tag tag-skip">Skip</span> Light/Paper Theme</h3>
-<p>We are committing fully to the Wine Red and Black UI/UX as requested. No toggle for old themes.</p>
+<h3><span class="tag tag-skip">Skip</span> Dark/Paper Theme</h3>
+<p>We are committing fully to the Red and Bright Light UI/UX as requested. No toggle for old themes.</p>
 
 <h2 class="page-break">Part Five — Six-Week Launch Plan</h2>
 
 <h3>Week 1 — UI Refactor &amp; The Timer</h3>
 <ul>
-  <li>Implement the Wine Red/Black design system globally.</li>
+  <li>Implement the Red/Light design system globally.</li>
   <li>Build the Focus Timer panel and topbar ring.</li>
   <li>Implement the free subscription preview logic.</li>
 </ul>
@@ -603,17 +621,17 @@
 </ul>
 
 <div class="box">
-  <p><strong>If we only do one thing this week:</strong> paint the app in the new Wine Red and Black theme and implement the Focus Timer. It instantly shows the client we understand the new premium direction while we rebuild the backend for global programs.</p>
+  <p><strong>If we only do one thing this week:</strong> paint the app in the new Red and Light theme and implement the Focus Timer. It instantly shows the client we understand the new premium direction while we rebuild the backend for global programs.</p>
 </div>
 
 <h2>Closing</h2>
 
-<p>The pivot to a Tutoring Platform is the right move. The foundations we built—auth, offline capabilities, and spaced repetition—are exactly what a global school needs. By adding program enrollments, free-tier previews, and a sleek dark UI, we are transforming Recall into a premium product that students worldwide will want to use.</p>
+<p>The pivot to a Tutoring Platform is the right move. The foundations we built—auth, offline capabilities, and spaced repetition—are exactly what a global school needs. By adding program enrollments, free-tier previews, and a sleek light UI, we are transforming Recall into a premium product that students worldwide will want to use.</p>
 
 <p>Let's start with the UI re-skin today. The rest will follow.</p>
 
 <div class="footer-note">
-  z.aiiscute.html — Recall Tutoring Project Pitch · Prepared for the team meeting
+  index.html — Recall Tutoring Project Pitch · Prepared for the team meeting
 </div>
 
 <script>
@@ -631,7 +649,7 @@
     observer.observe(el);
   });
 
-  // Automatic Scrolling Text Highlighter Logic
+  // Pure DOM-based Automatic Scrolling Text Highlighter Logic (No AI involved)
   const highlightObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.dataset.highlighted) {
@@ -639,10 +657,10 @@
         
         const importantWords = [
           "Global Tutoring Platform", "client requirements", "Subscription Tier", 
-          "Free Preview", "paywall", "Program Enrollment System", "Wine Red & Black UI/UX", 
+          "Free Preview", "paywall", "Program Enrollment System", "Red & Light UI/UX", 
           "World Wide School", "internationalization", "Supabase Storage", 
           "Focus Session", "Sliding Dock Navigation", "Resource Snippets", 
-          "View Transitions API", "Wine Red/Black design system", "UI re-skin",
+          "View Transitions API", "Red/Light design system", "UI re-skin",
           "premium product"
         ];
         
