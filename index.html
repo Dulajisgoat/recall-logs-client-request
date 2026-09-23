@@ -34,6 +34,10 @@
     position: relative;
     overflow-x: hidden;
     cursor: none; /* Hide default for custom liquid cursor */
+    /* Sleek modern font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Glossy Background Elements */
@@ -345,6 +349,14 @@
     letter-spacing: 0.05em;
   }
 
+  /* Sleek highlight animation for important text */
+  .auto-highlight {
+    color: var(--wine-bright);
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(168, 44, 69, 0.3);
+    animation: highlightFadeIn 0.8s ease-out forwards;
+  }
+
   /* Keyframe Animations */
   @keyframes fadeIn {
     to { opacity: 1; }
@@ -362,6 +374,11 @@
   @keyframes shine {
     0% { transform: translate(-50%, -50%) rotate(45deg); }
     100% { transform: translate(50%, 50%) rotate(45deg); }
+  }
+
+  @keyframes highlightFadeIn {
+    from { opacity: 0.5; text-shadow: none; }
+    to { opacity: 1; text-shadow: 0 0 8px rgba(168, 44, 69, 0.3); }
   }
 
   /* Responsive */
@@ -385,6 +402,7 @@
     pre, code { background: #f4f4f4; color: #4A0E1E; border: 1px solid #ddd; }
     .box { background: #f9f9f9; box-shadow: none; border-left: 4px solid #A82C45; }
     .tag { border: 1px solid #ddd; }
+    .auto-highlight { color: #A82C45; text-shadow: none; }
   }
 </style>
 </head>
@@ -598,6 +616,61 @@
 
   document.querySelectorAll('p, h3, h2, .box, table').forEach(el => {
     observer.observe(el);
+  });
+
+  // Automatic Scrolling Text Highlighter Logic
+  const highlightObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.highlighted) {
+        // Mark as processed so we don't run it multiple times
+        entry.target.dataset.highlighted = 'true';
+        
+        // Core words that are important in the context of this document
+        const importantWords = [
+          "Global Tutoring Platform", "client requirements", "Subscription Tier", 
+          "Free Preview", "paywall", "Program Enrollment System", "Wine Red & Black UI/UX", 
+          "World Wide School", "internationalization", "Supabase Storage", 
+          "Focus Session", "Sliding Dock Navigation", "Resource Snippets", 
+          "View Transitions API", "Wine Red/Black design system", "UI re-skin",
+          "premium product"
+        ];
+        
+        // Inner function to replace text but preserve HTML tags
+        function wrapWords(node) {
+          if (node.nodeType === 3) { // Node.TEXT_NODE
+            let text = node.textContent;
+            // Sorting by length ensures we match longer phrases first
+            importantWords.sort((a, b) => b.length - a.length);
+            importantWords.forEach(word => {
+              const regex = new RegExp(`\\b${word}\\b`, "gi");
+              if (regex.test(text)) {
+                // Create a new span to replace the text node
+                const span = document.createElement('span');
+                span.innerHTML = text.replace(regex, `<span class="auto-highlight">$&</span>`);
+                node.replaceWith(span);
+                // Unwrap the outer span (keep only the inner spans)
+                while (span.firstChild) {
+                  span.parentNode.insertBefore(span.firstChild, span);
+                }
+                span.remove();
+                // Update text reference if we need to match again (not strictly necessary but safe)
+                text = span.textContent; 
+              }
+            });
+          } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT', 'STYLE', 'CODE', 'PRE'].includes(node.tagName)) {
+            // Node.ELEMENT_NODE: Recursively check children, skip code blocks/scripts
+            Array.from(node.childNodes).forEach(wrapWords);
+          }
+        }
+
+        wrapWords(entry.target);
+      }
+    });
+  }, { threshold: 0.4 }); // Trigger when 40% of the element is visible
+
+  // Observe all paragraphs and list items for highlighting
+  document.querySelectorAll('p, li, td, .box').forEach(el => {
+    highlightObserver.observe(el);
   });
 </script>
 
