@@ -3,19 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>z.aiiscute.html — Recall Tutoring</title>
+<title>Recall Tutoring — Liquid Glass Pitch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* Liquid UI & Glossy Background Setup */
+  /* Liquid Glass Variables */
   :root {
     --bg-black: #050505;
-    --glass-dark: rgba(20, 20, 20, 0.65);
+    --glass-dark: rgba(18, 18, 18, 0.45);
+    --glass-light: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-highlight: rgba(255, 255, 255, 0.25);
+    
     --wine-deep: #4A0E1E;
     --wine-bright: #A82C45;
+    --wine-glow: rgba(168, 44, 69, 0.6);
+    
     --text-light: #E0DCDA;
     --text-white: #F7F7F7;
+    --text-muted: #959595;
   }
 
   * { 
@@ -23,7 +30,7 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    font-family: 'Manrope', -apple-system, 'Segoe UI', Helvetica, sans-serif;
     font-size: 11pt;
     line-height: 1.65;
     color: var(--text-light);
@@ -33,393 +40,401 @@
     background: var(--bg-black);
     position: relative;
     overflow-x: hidden;
-    cursor: none; /* Hide default for custom liquid cursor */
+    /* Remove Cursor Completely */
+    cursor: none !important; 
+    
     /* Sleek modern font rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
-  /* Glossy Background Elements */
-  .glossy-bg {
+  /* Liquid Glass Background Elements */
+  .glass-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -2;
     background: 
       radial-gradient(circle at 10% 10%, rgba(74, 14, 30, 0.4) 0%, transparent 40%),
       radial-gradient(circle at 90% 80%, rgba(168, 44, 69, 0.3) 0%, transparent 45%),
       #050505;
+    overflow: hidden;
   }
 
-  .glossy-overlay {
+  /* Floating vibrant orbs for liquid glass effect */
+  .orb {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.02) 100%);
-    backdrop-filter: blur(10px);
-    pointer-events: none;
-  }
-
-  /* Liquid Cursor UI */
-  .liquid-cursor {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, var(--wine-bright) 0%, transparent 70%);
     border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: floatOrb 20s infinite ease-in-out;
+  }
+
+  .orb-1 { width: 400px; height: 400px; background: var(--wine-deep); top: -100px; left: -100px; }
+  .orb-2 { width: 300px; height: 300px; background: var(--wine-bright); bottom: -50px; right: -50px; animation-delay: -5s; }
+  .orb-3 { width: 200px; height: 200px; background: #1a1a1a; top: 40%; left: 40%; animation-delay: -10s; }
+
+  /* Liquid Glass Cursor (Hidden by default, enabled on touch/mobile) */
+  .glass-cursor {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--glass-highlight);
+    border-radius: 50%;
+    background: var(--glass-light);
+    backdrop-filter: blur(4px);
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s, height 0.3s;
-    mix-blend-mode: screen;
     transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none; /* Hide entirely to meet requirements */
   }
   
-  .liquid-cursor.active {
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, rgba(168, 44, 69, 0.4) 0%, transparent 70%);
-  }
-
-  h1, h2, h3, h4 {
-    font-family: 'Playfair Display', Georgia, serif;
+  /* Headings - Space Grotesk for that ultra-modern minimal look */
+  h1, h2, h3, h4, .mark, .sub, .footer-note {
+    font-family: 'Space Grotesk', sans-serif;
     color: var(--text-white);
-    letter-spacing: -0.01em;
-    line-height: 1.25;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
-  h1 { font-size: 34pt; margin: 0 0 8px; font-weight: 700; }
+  h1 { font-size: 36pt; margin: 0 0 8px; font-weight: 600; }
   
   h2 {
-    font-size: 20pt;
-    margin: 48px 0 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(168, 44, 69, 0.3);
-    font-weight: 700;
-    page-break-after: avoid;
+    font-size: 22pt;
+    margin: 60px 0 20px;
+    font-weight: 500;
     position: relative;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeUp 0.8s forwards;
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
 
-  /* Liquid underline effect for H2 */
-  h2::after {
+  h2::before {
     content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 40%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--wine-bright), transparent);
-    border-radius: 2px;
+    width: 8px;
+    height: 8px;
+    background: var(--wine-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--wine-glow);
+    flex-shrink: 0;
   }
 
   h3 {
-    font-size: 14pt;
-    margin: 30px 0 10px;
-    font-weight: 600;
-    color: var(--wine-bright);
+    font-size: 15pt;
+    margin: 32px 0 12px;
+    font-weight: 500;
+    color: var(--text-white);
     page-break-after: avoid;
     opacity: 0;
     transform: translateY(15px);
     animation: fadeUp 0.6s forwards;
     animation-delay: 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   h4 {
-    font-size: 12pt;
-    margin: 20px 0 8px;
-    font-weight: 600;
+    font-size: 13pt;
+    margin: 24px 0 8px;
+    font-weight: 500;
     color: var(--text-white);
     page-break-after: avoid;
   }
 
-  p { margin: 0 0 14px; opacity: 0; animation: fadeIn 1s forwards; animation-delay: 0.2s; }
+  p { margin: 0 0 16px; opacity: 0; animation: fadeIn 1s forwards; animation-delay: 0.2s; color: var(--text-muted); }
   ul, ol { margin: 0 0 16px; padding-left: 24px; }
-  li { margin-bottom: 8px; transition: color 0.3s ease; }
-  li:hover { color: var(--wine-bright); }
+  li { 
+    margin-bottom: 10px; 
+    transition: color 0.3s ease, transform 0.3s ease; 
+    color: var(--text-muted);
+  }
+  li:hover { color: var(--text-white); transform: translateX(4px); }
 
   code {
     font-family: 'JetBrains Mono', Consolas, monospace;
     font-size: 9.5pt;
-    background: rgba(168, 44, 69, 0.1);
-    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 3px 6px;
     border-radius: 4px;
-    color: var(--wine-bright);
-    border: 1px solid rgba(168, 44, 69, 0.2);
+    color: var(--text-white);
+    border: 1px solid var(--glass-border);
   }
 
   pre {
     font-family: 'JetBrains Mono', Consolas, monospace;
     font-size: 9.5pt;
     background: var(--glass-dark);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 3px solid var(--wine-bright);
-    padding: 16px;
-    border-radius: 8px;
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: 16px 20px;
+    border-radius: 12px;
     overflow-x: auto;
-    line-height: 1.5;
-    margin: 14px 0;
+    line-height: 1.6;
+    margin: 20px 0;
     white-space: pre-wrap;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.05);
+    position: relative;
+  }
+
+  /* Liquid Glass Pre Gloss */
+  pre::before, table tr::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+    pointer-events: none;
+    border-radius: 12px 12px 0 0;
   }
 
   blockquote {
-    margin: 16px 0;
-    padding: 8px 0 8px 20px;
-    border-left: 3px solid var(--wine-bright);
-    color: #B0B0B0;
+    margin: 20px 0;
+    padding: 12px 20px;
+    border-left: 2px solid var(--wine-bright);
+    background: var(--glass-dark);
+    backdrop-filter: blur(8px);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-white);
     font-style: italic;
   }
 
+  /* Liquid Glass Table */
   table {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    margin: 24px 0;
     font-size: 10pt;
-    backdrop-filter: blur(5px);
   }
 
   th, td {
     text-align: left;
-    padding: 12px 14px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    vertical-align: top;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: middle;
     transition: background 0.3s ease;
   }
 
   th {
-    background: rgba(26, 26, 26, 0.8);
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 9pt;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--wine-bright);
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    border-bottom: none;
   }
 
+  tr {
+    background: var(--glass-dark);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  
+  tr td:first-child { border-radius: 12px 0 0 12px; }
+  tr td:last-child { border-radius: 0 12px 12px 0; }
+
   tr:hover td {
-    background: rgba(168, 44, 69, 0.05);
+    background: rgba(168, 44, 69, 0.08);
+    color: var(--text-white);
   }
 
   /* Cover Section */
   .cover {
     text-align: center;
-    padding: 100px 30px 80px;
-    margin-bottom: 50px;
-    background: radial-gradient(circle at top, rgba(74, 14, 30, 0.6) 0%, transparent 70%);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    padding: 120px 30px 90px;
+    margin-bottom: 60px;
+    background: radial-gradient(circle at top, rgba(74, 14, 30, 0.5) 0%, transparent 70%);
     position: relative;
     overflow: hidden;
   }
 
-  /* Glossy reflection on cover */
-  .cover::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.05) 50%, transparent 55%);
-    transform: rotate(45deg);
-    pointer-events: none;
-    animation: shine 6s infinite linear;
-  }
-
   .cover .mark {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 64pt;
+    font-size: 80pt;
     color: var(--wine-bright);
-    line-height: 1;
-    margin-bottom: 10px;
-    text-shadow: 0 0 30px rgba(168, 44, 69, 0.6);
+    line-height: 0.8;
+    margin-bottom: 24px;
+    text-shadow: 0 0 40px var(--wine-glow);
     display: inline-block;
-    animation: pulse 3s infinite ease-in-out;
+    animation: pulse 4s infinite ease-in-out;
+    font-weight: 300;
   }
 
   .cover h1 { 
-    font-size: 40pt; 
-    margin-bottom: 8px; 
+    font-size: 46pt; 
+    margin-bottom: 12px; 
     color: var(--text-white);
-    background: linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%);
+    font-weight: 600;
+    background: linear-gradient(180deg, #FFFFFF 0%, #BBBBBB 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .cover .sub {
-    font-family: 'Inter', sans-serif;
     font-size: 12pt;
     color: var(--wine-bright);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-top: 16px;
     font-weight: 600;
   }
 
   .tag {
-    display: inline-block;
-    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 8.5pt;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 20px; /* Pill shape for liquid feel */
+    padding: 6px 12px;
+    border-radius: 20px;
     margin-right: 8px;
     vertical-align: middle;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     cursor: pointer;
+    background: var(--glass-dark);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
   
   .tag:hover {
-    transform: scale(1.1) translateY(-2px);
-    box-shadow: 0 4px 15px rgba(168, 44, 69, 0.3);
+    transform: scale(1.05) translateY(-2px);
+    background: rgba(255,255,255,0.08);
   }
 
-  .tag-pivot { background: var(--wine-deep); color: var(--text-white); border: 1px solid var(--wine-bright); }
-  .tag-feature { background: rgba(26, 26, 26, 0.8); color: var(--wine-bright); border: 1px solid rgba(168, 44, 69, 0.3); backdrop-filter: blur(4px); }
-  .tag-fix { background: rgba(26, 26, 26, 0.8); color: #4A90E2; border: 1px solid rgba(74, 144, 226, 0.3); backdrop-filter: blur(4px); }
-  .tag-skip { background: rgba(51, 51, 51, 0.5); color: #888; border: 1px solid #444; }
+  .tag-pivot { color: var(--text-white); border-color: rgba(168, 44, 69, 0.5); background: linear-gradient(135deg, rgba(74, 14, 30, 0.6), rgba(20, 20, 20, 0.4)); }
+  .tag-feature { color: var(--wine-bright); }
+  .tag-fix { color: #4A90E2; }
+  .tag-skip { color: #888; border-color: rgba(255,255,255,0.05); }
 
+  /* Liquid Glass Box */
   .box {
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-left: 4px solid var(--wine-bright);
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin: 22px 0;
+    background: var(--glass-dark);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin: 28px 0;
     page-break-inside: avoid;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05);
+    transition: transform 0.4s ease, border-color 0.4s ease;
     position: relative;
     overflow: hidden;
   }
 
-  .box:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(168, 44, 69, 0.15);
-  }
-
-  /* Liquid shimmer inside box */
-  .box::after {
+  .box::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-    transition: 0.6s;
-  }
-  .box:hover::after {
-    left: 100%;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
   }
 
-  .box p:last-child { margin-bottom: 0; }
-  .box strong { color: var(--wine-bright); }
+  .box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168, 44, 69, 0.4);
+  }
+
+  .box p:last-child { margin-bottom: 0; color: var(--text-light); }
+  .box strong { color: var(--wine-bright); font-weight: 600; }
 
   .page-break { page-break-before: always; margin-top: 80px; }
   
   hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--wine-deep), transparent);
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
     margin: 40px 0;
   }
 
   .footer-note {
     margin-top: 80px;
     padding-top: 24px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid var(--glass-border);
     font-size: 9.5pt;
-    color: #666;
+    color: var(--text-muted);
     text-align: center;
-    font-family: 'Inter', sans-serif;
     letter-spacing: 0.05em;
   }
 
   /* Sleek highlight animation for important text */
   .auto-highlight {
-    color: var(--wine-bright);
+    color: var(--text-white);
     font-weight: 600;
-    text-shadow: 0 0 8px rgba(168, 44, 69, 0.3);
+    background: linear-gradient(180deg, #A82C45 0%, #4A0E1E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     animation: highlightFadeIn 0.8s ease-out forwards;
   }
 
   /* Keyframe Animations */
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse {
-    0%, 100% { text-shadow: 0 0 30px rgba(168, 44, 69, 0.6); transform: scale(1); }
-    50% { text-shadow: 0 0 50px rgba(168, 44, 69, 0.9); transform: scale(1.02); }
+    0%, 100% { text-shadow: 0 0 30px var(--wine-glow); transform: scale(1); }
+    50% { text-shadow: 0 0 60px var(--wine-glow); transform: scale(1.02); }
   }
-
-  @keyframes shine {
-    0% { transform: translate(-50%, -50%) rotate(45deg); }
-    100% { transform: translate(50%, 50%) rotate(45deg); }
+  @keyframes floatOrb {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(30px, 30px); }
+    50% { transform: translate(-20px, 40px); }
+    75% { transform: translate(20px, -30px); }
   }
-
   @keyframes highlightFadeIn {
-    from { opacity: 0.5; text-shadow: none; }
-    to { opacity: 1; text-shadow: 0 0 8px rgba(168, 44, 69, 0.3); }
+    from { opacity: 0.5; }
+    to { opacity: 1; }
   }
 
   /* Responsive */
   @media (max-width: 768px) {
-    body { cursor: auto; padding: 40px 20px; }
-    .liquid-cursor { display: none; }
-    h1 { font-size: 28pt; }
-    .cover h1 { font-size: 30pt; }
-    .cover .mark { font-size: 48pt; }
+    body { padding: 40px 20px; }
+    h1 { font-size: 30pt; }
+    .cover h1 { font-size: 34pt; }
+    .cover .mark { font-size: 60pt; }
+    h2 { font-size: 18pt; }
+    h3 { font-size: 13pt; }
   }
 
   @media print {
     body { background: white; padding: 0; max-width: none; color: #000; cursor: auto; }
-    .glossy-bg, .glossy-overlay, .liquid-cursor { display: none; }
+    .glass-bg, .glass-cursor, .orb { display: none; }
     .cover { padding-top: 40px; background: none; box-shadow: none; border: none; }
-    .cover::before { display: none; }
     h1, h2, h3, h4, p, li, td, th { color: #000; }
     h2, h3, p { opacity: 1; transform: none; }
     h2 { border-bottom: 1px solid #4A0E1E; }
-    h2::after { display: none; }
+    h2::before { display: none; }
     pre, code { background: #f4f4f4; color: #4A0E1E; border: 1px solid #ddd; }
-    .box { background: #f9f9f9; box-shadow: none; border-left: 4px solid #A82C45; }
+    .box { background: #f9f9f9; box-shadow: none; border: 1px solid #ddd; }
     .tag { border: 1px solid #ddd; }
-    .auto-highlight { color: #A82C45; text-shadow: none; }
+    .auto-highlight { color: #A82C45; -webkit-text-fill-color: #A82C45; background: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- Glossy Background Layers -->
-<div class="glossy-bg"></div>
-<div class="glossy-overlay"></div>
-
-<!-- Liquid Cursor UI -->
-<div class="liquid-cursor" id="cursor"></div>
+<!-- Liquid Glass Background Layers -->
+<div class="glass-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
 <div class="cover">
   <div class="mark">R</div>
   <h1>Recall Tutoring</h1>
   <div class="sub">Project Pitch &amp; Development Roadmap</div>
-  <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; color: #E0DCDA; margin-top: 24px; font-size: 14pt; position: relative; z-index: 2;">
+  <p style="font-family: 'Space Grotesk', sans-serif; color: #E0DCDA; margin-top: 24px; font-size: 14pt; position: relative; z-index: 2; opacity: 1; animation: none; font-style: normal;">
     Evolving our platform into a global educational hub.
   </p>
 </div>
@@ -574,36 +589,6 @@
 </div>
 
 <script>
-  // Liquid UI Cursor Logic
-  const cursor = document.getElementById('cursor');
-  let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  // Smooth trailing effect
-  function animateCursor() {
-    cursorX += (mouseX - cursorX) * 0.15;
-    cursorY += (mouseY - cursorY) * 0.15;
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-
-  // Liquid grow effect on interactive elements
-  document.querySelectorAll('a, .tag, .box, li, td, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('active');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('active');
-    });
-  });
-
   // Reveal animations on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -622,10 +607,8 @@
   const highlightObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.dataset.highlighted) {
-        // Mark as processed so we don't run it multiple times
         entry.target.dataset.highlighted = 'true';
         
-        // Core words that are important in the context of this document
         const importantWords = [
           "Global Tutoring Platform", "client requirements", "Subscription Tier", 
           "Free Preview", "paywall", "Program Enrollment System", "Wine Red & Black UI/UX", 
@@ -635,30 +618,24 @@
           "premium product"
         ];
         
-        // Inner function to replace text but preserve HTML tags
         function wrapWords(node) {
-          if (node.nodeType === 3) { // Node.TEXT_NODE
+          if (node.nodeType === 3) { 
             let text = node.textContent;
-            // Sorting by length ensures we match longer phrases first
             importantWords.sort((a, b) => b.length - a.length);
             importantWords.forEach(word => {
               const regex = new RegExp(`\\b${word}\\b`, "gi");
               if (regex.test(text)) {
-                // Create a new span to replace the text node
                 const span = document.createElement('span');
                 span.innerHTML = text.replace(regex, `<span class="auto-highlight">$&</span>`);
                 node.replaceWith(span);
-                // Unwrap the outer span (keep only the inner spans)
                 while (span.firstChild) {
                   span.parentNode.insertBefore(span.firstChild, span);
                 }
                 span.remove();
-                // Update text reference if we need to match again (not strictly necessary but safe)
                 text = span.textContent; 
               }
             });
           } else if (node.nodeType === 1 && node.childNodes && !['SCRIPT', 'STYLE', 'CODE', 'PRE'].includes(node.tagName)) {
-            // Node.ELEMENT_NODE: Recursively check children, skip code blocks/scripts
             Array.from(node.childNodes).forEach(wrapWords);
           }
         }
@@ -666,9 +643,8 @@
         wrapWords(entry.target);
       }
     });
-  }, { threshold: 0.4 }); // Trigger when 40% of the element is visible
+  }, { threshold: 0.4 });
 
-  // Observe all paragraphs and list items for highlighting
   document.querySelectorAll('p, li, td, .box').forEach(el => {
     highlightObserver.observe(el);
   });
