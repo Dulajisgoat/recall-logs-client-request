@@ -3,183 +3,405 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recall Tutoring — Project Pitch &amp; Build Notes</title>
+<title>z.aiiscute.html — Recall Tutoring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  @page { size: A4; margin: 20mm 18mm; }
-  * { box-sizing: border-box; }
+  /* Liquid UI & Glossy Background Setup */
+  :root {
+    --bg-black: #050505;
+    --glass-dark: rgba(20, 20, 20, 0.65);
+    --wine-deep: #4A0E1E;
+    --wine-bright: #A82C45;
+    --text-light: #E0DCDA;
+    --text-white: #F7F7F7;
+  }
+
+  * { 
+    box-sizing: border-box; 
+  }
+
   body {
     font-family: 'Inter', -apple-system, 'Segoe UI', Helvetica, sans-serif;
     font-size: 11pt;
     line-height: 1.65;
-    color: #E0DCDA; /* Off-white text for dark mode */
-    max-width: 800px;
+    color: var(--text-light);
+    max-width: 850px;
     margin: 0 auto;
-    padding: 40px 20px;
-    background: #0D0D0D; /* Deep Black background */
+    padding: 60px 30px;
+    background: var(--bg-black);
+    position: relative;
+    overflow-x: hidden;
+    cursor: none; /* Hide default for custom liquid cursor */
   }
+
+  /* Glossy Background Elements */
+  .glossy-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+      radial-gradient(circle at 10% 10%, rgba(74, 14, 30, 0.4) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(168, 44, 69, 0.3) 0%, transparent 45%),
+      #050505;
+  }
+
+  .glossy-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+
+  /* Liquid Cursor UI */
+  .liquid-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--wine-bright) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s, height 0.3s;
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%);
+  }
+  
+  .liquid-cursor.active {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(168, 44, 69, 0.4) 0%, transparent 70%);
+  }
+
   h1, h2, h3, h4 {
     font-family: 'Playfair Display', Georgia, serif;
-    color: #F7F7F7;
+    color: var(--text-white);
     letter-spacing: -0.01em;
     line-height: 1.25;
   }
-  h1 { font-size: 32pt; margin: 0 0 8px; font-weight: 700; }
+
+  h1 { font-size: 34pt; margin: 0 0 8px; font-weight: 700; }
+  
   h2 {
-    font-size: 18pt;
-    margin: 42px 0 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #4A0E1E; /* Wine red divider */
+    font-size: 20pt;
+    margin: 48px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(168, 44, 69, 0.3);
     font-weight: 700;
     page-break-after: avoid;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s forwards;
   }
+
+  /* Liquid underline effect for H2 */
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 40%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--wine-bright), transparent);
+    border-radius: 2px;
+  }
+
   h3 {
-    font-size: 13pt;
-    margin: 26px 0 8px;
+    font-size: 14pt;
+    margin: 30px 0 10px;
     font-weight: 600;
-    color: #A82C45; /* Bright Wine Red */
+    color: var(--wine-bright);
     page-break-after: avoid;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeUp 0.6s forwards;
+    animation-delay: 0.1s;
   }
+
   h4 {
-    font-size: 11pt;
-    margin: 18px 0 6px;
+    font-size: 12pt;
+    margin: 20px 0 8px;
     font-weight: 600;
-    color: #F7F7F7;
+    color: var(--text-white);
     page-break-after: avoid;
   }
-  p { margin: 0 0 12px; }
-  ul, ol { margin: 0 0 14px; padding-left: 22px; }
-  li { margin-bottom: 6px; }
+
+  p { margin: 0 0 14px; opacity: 0; animation: fadeIn 1s forwards; animation-delay: 0.2s; }
+  ul, ol { margin: 0 0 16px; padding-left: 24px; }
+  li { margin-bottom: 8px; transition: color 0.3s ease; }
+  li:hover { color: var(--wine-bright); }
+
   code {
-    font-family: 'SF Mono', Consolas, monospace;
+    font-family: 'JetBrains Mono', Consolas, monospace;
     font-size: 9.5pt;
-    background: #1A1A1A;
-    padding: 1px 5px;
-    border-radius: 3px;
-    color: #A82C45;
-  }
-  pre {
-    font-family: 'SF Mono', Consolas, monospace;
-    font-size: 9pt;
-    background: #1A1A1A;
-    border-left: 3px solid #A82C45;
-    padding: 12px 14px;
+    background: rgba(168, 44, 69, 0.1);
+    padding: 2px 6px;
     border-radius: 4px;
+    color: var(--wine-bright);
+    border: 1px solid rgba(168, 44, 69, 0.2);
+  }
+
+  pre {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 9.5pt;
+    background: var(--glass-dark);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--wine-bright);
+    padding: 16px;
+    border-radius: 8px;
     overflow-x: auto;
     line-height: 1.5;
-    margin: 12px 0;
-    white-space: pre-wrap;
-  }
-  blockquote {
     margin: 14px 0;
-    padding: 4px 0 4px 16px;
-    border-left: 3px solid #A82C45;
+    white-space: pre-wrap;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 8px 0 8px 20px;
+    border-left: 3px solid var(--wine-bright);
     color: #B0B0B0;
     font-style: italic;
   }
+
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 14px 0;
+    margin: 20px 0;
     font-size: 10pt;
-    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    backdrop-filter: blur(5px);
   }
+
   th, td {
     text-align: left;
-    padding: 8px 10px;
-    border-bottom: 1px solid #333;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     vertical-align: top;
+    transition: background 0.3s ease;
   }
+
   th {
-    background: #1A1A1A;
+    background: rgba(26, 26, 26, 0.8);
     font-weight: 600;
     font-size: 9pt;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #A82C45;
+    letter-spacing: 0.08em;
+    color: var(--wine-bright);
   }
+
+  tr:hover td {
+    background: rgba(168, 44, 69, 0.05);
+  }
+
+  /* Cover Section */
   .cover {
     text-align: center;
-    padding: 80px 20px 60px;
-    border-bottom: 2px solid #A82C45;
-    margin-bottom: 40px;
-    background: radial-gradient(circle at top, #4A0E1E 0%, #0D0D0D 70%);
-    border-radius: 12px;
+    padding: 100px 30px 80px;
+    margin-bottom: 50px;
+    background: radial-gradient(circle at top, rgba(74, 14, 30, 0.6) 0%, transparent 70%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
   }
+
+  /* Glossy reflection on cover */
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.05) 50%, transparent 55%);
+    transform: rotate(45deg);
+    pointer-events: none;
+    animation: shine 6s infinite linear;
+  }
+
   .cover .mark {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
-    font-size: 56pt;
-    color: #A82C45;
+    font-size: 64pt;
+    color: var(--wine-bright);
     line-height: 1;
-    margin-bottom: 8px;
-    text-shadow: 0 0 20px rgba(168, 44, 69, 0.5);
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(168, 44, 69, 0.6);
+    display: inline-block;
+    animation: pulse 3s infinite ease-in-out;
   }
-  .cover h1 { font-size: 36pt; margin-bottom: 6px; color: #F7F7F7; }
+
+  .cover h1 { 
+    font-size: 40pt; 
+    margin-bottom: 8px; 
+    color: var(--text-white);
+    background: linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .cover .sub {
-    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 12pt;
-    color: #A82C45;
-    letter-spacing: 0.08em;
+    color: var(--wine-bright);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-top: 14px;
+    margin-top: 16px;
     font-weight: 600;
   }
+
   .tag {
     display: inline-block;
-    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 8.5pt;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 3px;
-    margin-right: 6px;
+    padding: 4px 10px;
+    border-radius: 20px; /* Pill shape for liquid feel */
+    margin-right: 8px;
     vertical-align: middle;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
   }
-  .tag-pivot { background: #4A0E1E; color: #F7F7F7; }
-  .tag-feature { background: #1A1A1A; color: #A82C45; border: 1px solid #333; }
-  .tag-skip { background: #333; color: #888; }
+  
+  .tag:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 4px 15px rgba(168, 44, 69, 0.3);
+  }
+
+  .tag-pivot { background: var(--wine-deep); color: var(--text-white); border: 1px solid var(--wine-bright); }
+  .tag-feature { background: rgba(26, 26, 26, 0.8); color: var(--wine-bright); border: 1px solid rgba(168, 44, 69, 0.3); backdrop-filter: blur(4px); }
+  .tag-fix { background: rgba(26, 26, 26, 0.8); color: #4A90E2; border: 1px solid rgba(74, 144, 226, 0.3); backdrop-filter: blur(4px); }
+  .tag-skip { background: rgba(51, 51, 51, 0.5); color: #888; border: 1px solid #444; }
+
   .box {
-    background: #1A1A1A;
-    border: 1px solid #333;
-    border-left: 4px solid #A82C45;
-    border-radius: 6px;
-    padding: 16px 20px;
-    margin: 18px 0;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--wine-bright);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 22px 0;
     page-break-inside: avoid;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
+
+  .box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(168, 44, 69, 0.15);
+  }
+
+  /* Liquid shimmer inside box */
+  .box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    transition: 0.6s;
+  }
+  .box:hover::after {
+    left: 100%;
+  }
+
   .box p:last-child { margin-bottom: 0; }
-  .box strong { color: #A82C45; }
-  .page-break { page-break-before: always; }
+  .box strong { color: var(--wine-bright); }
+
+  .page-break { page-break-before: always; margin-top: 80px; }
+  
   hr {
     border: none;
-    border-top: 1px solid #333;
-    margin: 30px 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--wine-deep), transparent);
+    margin: 40px 0;
   }
+
   .footer-note {
-    margin-top: 60px;
-    padding-top: 20px;
-    border-top: 1px solid #333;
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
     font-size: 9.5pt;
     color: #666;
     text-align: center;
-    font-family: -apple-system, 'Segoe UI', Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.05em;
   }
+
+  /* Keyframe Animations */
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { text-shadow: 0 0 30px rgba(168, 44, 69, 0.6); transform: scale(1); }
+    50% { text-shadow: 0 0 50px rgba(168, 44, 69, 0.9); transform: scale(1.02); }
+  }
+
+  @keyframes shine {
+    0% { transform: translate(-50%, -50%) rotate(45deg); }
+    100% { transform: translate(50%, 50%) rotate(45deg); }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    body { cursor: auto; padding: 40px 20px; }
+    .liquid-cursor { display: none; }
+    h1 { font-size: 28pt; }
+    .cover h1 { font-size: 30pt; }
+    .cover .mark { font-size: 48pt; }
+  }
+
   @media print {
-    body { background: white; padding: 0; max-width: none; color: #000; }
-    .cover { padding-top: 40px; background: none; }
+    body { background: white; padding: 0; max-width: none; color: #000; cursor: auto; }
+    .glossy-bg, .glossy-overlay, .liquid-cursor { display: none; }
+    .cover { padding-top: 40px; background: none; box-shadow: none; border: none; }
+    .cover::before { display: none; }
     h1, h2, h3, h4, p, li, td, th { color: #000; }
-    pre, code { background: #f4f4f4; color: #4A0E1E; }
+    h2, h3, p { opacity: 1; transform: none; }
+    h2 { border-bottom: 1px solid #4A0E1E; }
+    h2::after { display: none; }
+    pre, code { background: #f4f4f4; color: #4A0E1E; border: 1px solid #ddd; }
+    .box { background: #f9f9f9; box-shadow: none; border-left: 4px solid #A82C45; }
+    .tag { border: 1px solid #ddd; }
   }
 </style>
 </head>
 <body>
 
+<!-- Glossy Background Layers -->
+<div class="glossy-bg"></div>
+<div class="glossy-overlay"></div>
+
+<!-- Liquid Cursor UI -->
+<div class="liquid-cursor" id="cursor"></div>
+
 <div class="cover">
   <div class="mark">R</div>
   <h1>Recall Tutoring</h1>
   <div class="sub">Project Pitch &amp; Development Roadmap</div>
-  <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; color: #E0DCDA; margin-top: 24px; font-size: 14pt;">
+  <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; color: #E0DCDA; margin-top: 24px; font-size: 14pt; position: relative; z-index: 2;">
     Evolving our platform into a global educational hub.
   </p>
 </div>
@@ -198,7 +420,7 @@
 <h3><span class="tag tag-pivot">Core</span> 3. Wine Red &amp; Black UI/UX</h3>
 <p>To spice things up and match the premium tutoring brand, we’re shifting from the paper theme to a sleek dark mode. Deep black backgrounds (<code>#0D0D0D</code>) with wine red accents (<code>#A82C45</code>) and subtle gradients to make the interface feel modern, focused, and high-end.</p>
 
-<h3><span class="tag tag-pivot">Core</span> 4. International Reach</h4>
+<h3><span class="tag tag-pivot">Core</span> 4. International Reach</h3>
 <p>The platform must be framed as a "World Wide School." We need internationalization (i18n) support, multi-currency for program pricing, and timezone-aware scheduling for live tutoring sessions.</p>
 
 <h2 class="page-break">Part One — Refactoring Existing Logic</h2>
@@ -330,8 +552,54 @@
 <p>Let's start with the UI re-skin today. The rest will follow.</p>
 
 <div class="footer-note">
-  Recall Tutoring — Project Pitch &amp; Build List · Prepared for the team meeting
+  z.aiiscute.html — Recall Tutoring Project Pitch · Prepared for the team meeting
 </div>
+
+<script>
+  // Liquid UI Cursor Logic
+  const cursor = document.getElementById('cursor');
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Smooth trailing effect
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.15;
+    cursorY += (mouseY - cursorY) * 0.15;
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Liquid grow effect on interactive elements
+  document.querySelectorAll('a, .tag, .box, li, td, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('active');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('active');
+    });
+  });
+
+  // Reveal animations on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('p, h3, h2, .box, table').forEach(el => {
+    observer.observe(el);
+  });
+</script>
 
 </body>
 </html>
